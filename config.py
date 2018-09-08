@@ -1,9 +1,11 @@
+import logging
+
 import redis
 
 
 class Config(object):
     """添加配置信息"""
-    DEBUG = True
+    # DEBUG = True
     # """添加数据库配置"""
     SQLALCHEMY_DATABASE_URI = "mysql://root:mysql@127.0.0.1:3306/flask_project"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -16,6 +18,8 @@ class Config(object):
     SESSION_USE_SIGNER = True  # 让 cookie 中的 session_id 被加密签名处理
     SESSION_REDIS = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT)  # 使用 redis 的实例
     PERMANENT_SESSION_LIFETIME = 86400  # session 的有效期，单位是秒
+    # 默认日志等级
+    LOG_LEVEL = logging.DEBUG
 
 
 class DevelopmentConfig(Config):
@@ -24,6 +28,8 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     DEBUG = False
+    """生产模式下的配置"""
+    LOG_LEVEL = logging.ERROR
 
 
 # 定义配置字典
